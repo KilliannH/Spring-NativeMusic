@@ -11,6 +11,8 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
+
+    // by default Spring will create a new column named as "image_url"
     private String imageUrl;
 
     public Album() {}
