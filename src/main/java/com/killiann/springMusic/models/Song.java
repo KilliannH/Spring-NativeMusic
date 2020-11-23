@@ -1,17 +1,19 @@
 package com.killiann.springMusic.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Song {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String filename;
+
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY)
+    private Set<Artist> artists = new HashSet<>();
 
     public Song() {}
 
@@ -21,10 +23,11 @@ public class Song {
 
     @Override
     public String toString() {
-        return "Artist{" +
+        return "Song{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", filename='" + filename + '\'' +
+                ", artists='" + artists + '\'' +
                 '}';
     }
 
@@ -50,5 +53,13 @@ public class Song {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public Set<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(Set<Artist> artists) {
+        this.artists = artists;
     }
 }

@@ -1,16 +1,22 @@
 package com.killiann.springMusic.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Artist {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "artist_song",
+            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "song_id",
+                    referencedColumnName = "id"))
+    private Set<Song> songs = new HashSet<>();
 
     public Artist() {}
 
@@ -23,6 +29,7 @@ public class Artist {
         return "Artist{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", songs='" + songs + '\'' +
                 '}';
     }
 
@@ -41,4 +48,13 @@ public class Artist {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(Set<Song> songs) {
+        this.songs = songs;
+    }
+
 }
