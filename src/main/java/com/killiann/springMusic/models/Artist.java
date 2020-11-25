@@ -1,5 +1,7 @@
 package com.killiann.springMusic.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,11 +13,9 @@ public class Artist {
     private Long id;
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "artist_song",
-            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "song_id",
-                    referencedColumnName = "id"))
+
+    @JsonIgnoreProperties({"artists"})
+    @ManyToMany(mappedBy = "artists")
     private Set<Song> songs = new HashSet<>();
 
     public Artist() {}

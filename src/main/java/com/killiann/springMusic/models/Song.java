@@ -1,5 +1,7 @@
 package com.killiann.springMusic.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,12 @@ public class Song {
     private String title;
     private String filename;
 
-    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"songs"})
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "song_artist",
+            joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id",
+                    referencedColumnName = "id"))
     private Set<Artist> artists = new HashSet<>();
 
     public Song() {}
@@ -57,9 +64,5 @@ public class Song {
 
     public Set<Artist> getArtists() {
         return artists;
-    }
-
-    public void setArtists(Set<Artist> artists) {
-        this.artists = artists;
     }
 }
