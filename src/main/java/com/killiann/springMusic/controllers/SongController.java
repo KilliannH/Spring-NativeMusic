@@ -35,7 +35,7 @@ public class SongController {
     }
 
     @PostMapping("/songs/{song_id}/artists/{id}")
-    Song songArtist(@PathVariable Long song_id, @PathVariable Long id) {
+    Song newSongArtist(@PathVariable Long song_id, @PathVariable Long id) {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
         return songRepository.findById(song_id).map(song -> {
 
@@ -73,5 +73,18 @@ public class SongController {
     @DeleteMapping("/songs/{id}")
     void deleteSong(@PathVariable Long id) {
         songRepository.deleteById(id);
+    }
+
+    @PostMapping("/songs/{song_id}/artists/{id}")
+    Song deleteSongArtist(@PathVariable Long song_id, @PathVariable Long id) {
+        Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
+        return songRepository.findById(song_id).map(song -> {
+
+            // as this is a Set and not a List,
+            // Set doesn't allow duplicates.
+            // Witch is what we want for this kind of manipulation.
+            song.getArtists().remove(artist);
+            return songRepository.save(song);
+        }).orElseThrow(() -> new SongNotFoundException(id));
     }
 }
