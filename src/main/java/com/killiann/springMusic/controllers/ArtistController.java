@@ -43,6 +43,7 @@ public class ArtistController {
         return repository.findById(id)
                 .map(artist -> {
                     artist.setName(newArtist.getName());
+                    artist.setImageUrl(newArtist.getImageUrl());
                     return repository.save(artist);
                 })
                 // not sure about this lines

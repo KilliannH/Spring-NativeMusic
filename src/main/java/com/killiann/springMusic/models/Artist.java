@@ -12,6 +12,7 @@ public class Artist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String imageUrl;
 
 
     @JsonIgnoreProperties({"artists"})
@@ -20,8 +21,8 @@ public class Artist {
 
     public Artist() {}
 
-    public Artist(String name) {
-        this.name = name;
+    public Artist(String name, String imageUrl) {
+        this.name = name; this.imageUrl = imageUrl;
     }
 
     @Override
@@ -29,6 +30,7 @@ public class Artist {
         return "Artist{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", songs='" + songs + '\'' +
                 '}';
     }
@@ -49,12 +51,11 @@ public class Artist {
         this.name = name;
     }
 
-    public Set<Song> getSongs() {
-        return songs;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setSongs(Set<Song> songs) {
-        this.songs = songs;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
-
 }

@@ -27,3 +27,7 @@ nb: you cannot update an already created relationship.
 
 CRUD on all tables. Relations are made after a content is created.
 when post a new song, youtube_url must be present to perform a download.
+
+related songs for artists might be handled by song controller 
+// since the relationship is  bidirectional, it will be seen when querying an artist as well
+
