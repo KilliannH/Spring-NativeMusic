@@ -16,9 +16,11 @@ public class Album {
     // by default Spring will create a new column named as "image_url"
     private String imageUrl;
 
+    @JsonIgnoreProperties({"artists", "albums"})
     @ManyToMany(mappedBy = "albums")
     private Set<Song> songs = new HashSet<>();
 
+    @JsonIgnoreProperties({"songs", "albums"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "album_artist",
             joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),

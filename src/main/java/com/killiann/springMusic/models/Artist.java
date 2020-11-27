@@ -15,11 +15,11 @@ public class Artist {
     private String imageUrl;
 
 
-    @JsonIgnoreProperties({"artists"})
+    @JsonIgnoreProperties({"artists", "albums"})
     @ManyToMany(mappedBy = "artists")
     private Set<Song> songs = new HashSet<>();
 
-    @JsonIgnoreProperties({"artists"})
+    @JsonIgnoreProperties({"artists", "songs"})
     @ManyToMany(mappedBy = "artists")
     private Set<Album> albums = new HashSet<>();
 

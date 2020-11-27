@@ -14,7 +14,7 @@ public class Song {
     private String title;
     private String filename;
 
-    @JsonIgnoreProperties({"songs"})
+    @JsonIgnoreProperties({"songs", "albums"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "song_artist",
             joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
@@ -22,6 +22,7 @@ public class Song {
                     referencedColumnName = "id"))
     private Set<Artist> artists = new HashSet<>();
 
+    @JsonIgnoreProperties({"songs", "artists"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "song_album",
             joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
