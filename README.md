@@ -35,3 +35,9 @@ related artists for albums might be handled by album controller
 
 
 // since the relationships are  bidirectional, it will be seen when querying an artist as well
+
+Querying one song will show a list of songs with a list of artists foreach songs & a list of albums foreach songs.
+Querying one artist will show a list of artists with a list of songs foreach artists & a list of albums foreach artists.
+Querying one album will show a list of albums with a list of songs foreach albums & a list of artists foreach albums.
+
+All API responses are properly Serialized by Jackson.
