@@ -41,3 +41,19 @@ Querying one artist will show a list of artists with a list of songs foreach art
 Querying one album will show a list of albums with a list of songs foreach albums & a list of artists foreach albums.
 
 All API responses are properly Serialized by Jackson.
+
+The db has two tables at startup : user & uer_role.
+
+user:
+- username
+- password
+- enabled
+
+pk (username)
+
+user_role:
+- user_role_id
+- username
+- role
+
+fk (username) references users (username)
