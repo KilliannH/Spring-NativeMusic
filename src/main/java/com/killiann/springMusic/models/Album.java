@@ -16,17 +16,15 @@ public class Album {
     // by default Spring will create a new column named as "image_url"
     private String imageUrl;
 
-    @JsonIgnoreProperties({"albums"})
     @ManyToMany(mappedBy = "albums")
     private Set<Song> songs = new HashSet<>();
 
-    @JsonIgnoreProperties({"albums"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "album_artist",
             joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id",
                     referencedColumnName = "id"))
-    private final Set<Artist> artists = new HashSet<>();
+    private Set<Artist> artists = new HashSet<>();
 
     public Album() {}
 
@@ -71,5 +69,16 @@ public class Album {
 
     public Set<Artist> getArtists() {
         return artists;
+    }
+    public void setArtists(Set<Artist> artists) {
+        this.artists = artists;
+    }
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(Set<Song> songs) {
+        this.songs = songs;
     }
 }

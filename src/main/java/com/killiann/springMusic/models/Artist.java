@@ -21,7 +21,7 @@ public class Artist {
 
     @JsonIgnoreProperties({"artists"})
     @ManyToMany(mappedBy = "artists")
-    private Set<Song> albums = new HashSet<>();
+    private Set<Album> albums = new HashSet<>();
 
     public Artist() {}
 
@@ -62,5 +62,21 @@ public class Artist {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Set<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(Set<Song> songs) {
+        this.songs = songs;
+    }
+
+    public Set<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(Set<Album> albums) {
+        this.albums = albums;
     }
 }
