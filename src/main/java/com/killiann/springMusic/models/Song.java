@@ -43,6 +43,7 @@ public class Song {
                 ", title='" + title + '\'' +
                 ", filename='" + filename + '\'' +
                 ", artists='" + artists + '\'' +
+                ", albums='" + albums + '\'' +
                 '}';
     }
 
