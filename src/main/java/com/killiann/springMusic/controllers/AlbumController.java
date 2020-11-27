@@ -78,7 +78,7 @@ public class AlbumController {
 
     // remove relationships
 
-    @PostMapping("/albums/{album_id}/artists/{id}")
+    @DeleteMapping("/albums/{album_id}/artists/{id}")
     Album deleteAlbumArtist(@PathVariable Long album_id, @PathVariable Long id) {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
         return albumRepository.findById(album_id).map(album -> {

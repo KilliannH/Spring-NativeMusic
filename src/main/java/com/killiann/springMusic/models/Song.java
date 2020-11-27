@@ -22,7 +22,7 @@ public class Song {
                     referencedColumnName = "id"))
     private final Set<Artist> artists = new HashSet<>();
 
-    @JsonIgnoreProperties({"songs"})
+    @JsonIgnoreProperties({"artists", "songs"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "song_album",
             joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
