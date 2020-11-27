@@ -1,9 +1,10 @@
 package com.killiann.springMusic.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Album {
@@ -14,6 +15,18 @@ public class Album {
 
     // by default Spring will create a new column named as "image_url"
     private String imageUrl;
+
+    @JsonIgnoreProperties({"albums"})
+    @ManyToMany(mappedBy = "albums")
+    private Set<Song> songs = new HashSet<>();
+
+    @JsonIgnoreProperties({"albums"})
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "album_artist",
+            joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id",
+                    referencedColumnName = "id"))
+    private final Set<Artist> artists = new HashSet<>();
 
     public Album() {}
 
@@ -27,6 +40,8 @@ public class Album {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", songs='" + songs + '\'' +
+                ", artists='" + artists + '\'' +
                 '}';
     }
 
@@ -52,5 +67,9 @@ public class Album {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Set<Artist> getArtists() {
+        return artists;
     }
 }

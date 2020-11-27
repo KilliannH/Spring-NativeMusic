@@ -95,6 +95,15 @@ public class SongController {
 
     // remove relationships
 
+    @PostMapping("/songs/{song_id}/artists/{id}")
+    Song deleteSongArtist(@PathVariable Long song_id, @PathVariable Long id) {
+        Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
+        return songRepository.findById(song_id).map(song -> {
+            song.getArtists().remove(artist);
+            return songRepository.save(song);
+        }).orElseThrow(() -> new SongNotFoundException(id));
+    }
+
     @PostMapping("/songs/{song_id}/albums/{id}")
     Song deleteSongAlbum(@PathVariable Long song_id, @PathVariable Long id) {
         Album album = albumRepository.findById(id).orElseThrow(() -> new AlbumNotFoundException(id));

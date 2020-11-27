@@ -19,6 +19,10 @@ public class Artist {
     @ManyToMany(mappedBy = "artists")
     private Set<Song> songs = new HashSet<>();
 
+    @JsonIgnoreProperties({"artists"})
+    @ManyToMany(mappedBy = "artists")
+    private Set<Song> albums = new HashSet<>();
+
     public Artist() {}
 
     public Artist(String name, String imageUrl) {
@@ -32,6 +36,7 @@ public class Artist {
                 ", name='" + name + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", songs='" + songs + '\'' +
+                ", albums='" + albums + '\'' +
                 '}';
     }
 
