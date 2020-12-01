@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name= "albums")
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class Album {
 
     @JsonIgnoreProperties({"songs", "albums"})
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "album_artist",
+    @JoinTable(name = "albums_artists",
             joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id",
                     referencedColumnName = "id"))

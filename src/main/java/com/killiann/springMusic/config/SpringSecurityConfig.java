@@ -13,21 +13,19 @@ import javax.sql.DataSource;
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     DataSource dataSource;
 
     SpringSecurityConfig(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    // Create 2 users for demo
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username, password from \"user\" where username=?")
+                .usersByUsernameQuery("select username, password from users where username=?")
                 .passwordEncoder(new BCryptPasswordEncoder())
-                .authoritiesByUsernameQuery("select username, role from user_role where username=?");
+                .authoritiesByUsernameQuery("select id, role_name from roles where role_name=?");
     }
 
     // Secure the endpoints with HTTP Basic authentication
