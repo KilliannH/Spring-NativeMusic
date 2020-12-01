@@ -13,7 +13,12 @@ import javax.sql.DataSource;
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     DataSource dataSource;
+
+    SpringSecurityConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     // Create 2 users for demo
     @Override
@@ -31,6 +36,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 //HTTP Basic authentication
+                .httpBasic()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/songs/**").hasRole("USER")
