@@ -1,14 +1,18 @@
 package com.killiann.springMusic.controllers;
 
+import com.killiann.springMusic.models.User;
 import com.killiann.springMusic.models.auth.AuthenticationRequest;
 import com.killiann.springMusic.models.auth.AuthenticationResponse;
-import com.killiann.springMusic.services.MyUserDetailsService;
+import com.killiann.springMusic.repositories.UserRepository;
+
 import com.killiann.springMusic.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private final JwtUtil jwtTokenUtil = new JwtUtil();
+    @Autowired
+    private JwtUtil jwtTokenUtil;
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
-    private MyUserDetailsService userDetailsService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -35,10 +42,9 @@ public class AuthController {
         }
 
 
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+        final User user = userRepository.findFirstByUsername(authenticationRequest.getUsername());
 
-        final String jwt = jwtTokenUtil.generateToken(userDetails);
+        final String jwt = jwtTokenUtil.generateToken(user);
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
