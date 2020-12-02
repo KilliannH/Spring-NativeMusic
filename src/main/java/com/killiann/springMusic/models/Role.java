@@ -34,7 +34,7 @@ public class Role {
                 '}';
     }
 
-    public String getROleName() {
+    public String getRoleName() {
         return roleName;
     }
 
