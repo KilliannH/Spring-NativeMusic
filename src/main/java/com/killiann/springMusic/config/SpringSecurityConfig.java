@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
@@ -30,13 +32,18 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username, password from users where username=?")
-                .passwordEncoder(new BCryptPasswordEncoder())
-                .authoritiesByUsernameQuery("select id, role_name from roles where role_name=?");
+                .usersByUsernameQuery("select username, password, enabled from users where username=?")
+                .passwordEncoder(passwordEncoder())
+                .authoritiesByUsernameQuery("select u.username, r.role_name from users u, roles r, users_roles ur where u.id = ur.user_id and r.id = ur.role_id and u.username=?");
     }
 
     // Secure the endpoints with HTTP Basic authentication
