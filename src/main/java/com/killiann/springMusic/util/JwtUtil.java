@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.function.Function;
 
 @Service
 public class JwtUtil {
 
-    private String SECRET_KEY = "secret";
+    ResourceBundle rb = ResourceBundle.getBundle("config");
+    private String SECRET_KEY = rb.getString("jwt.secret.key");
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

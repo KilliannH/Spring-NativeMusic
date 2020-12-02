@@ -5,9 +5,6 @@ import com.killiann.springMusic.models.User;
 import com.killiann.springMusic.repositories.RoleRepository;
 import com.killiann.springMusic.repositories.UserRepository;
 import com.killiann.springMusic.util.JwtUtil;
-import jdk.jfr.internal.LogLevel;
-import jdk.jfr.internal.LogTag;
-import jdk.jfr.internal.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
