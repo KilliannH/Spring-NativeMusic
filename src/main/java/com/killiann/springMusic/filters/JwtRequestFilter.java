@@ -28,7 +28,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
 
     @Autowired
     private JwtUtil jwtUtil;

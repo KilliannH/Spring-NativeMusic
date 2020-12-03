@@ -9,7 +9,7 @@ import java.util.Set;
 @Table(name= "roles")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "role_name")
@@ -30,7 +30,6 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", roleName='" + roleName + '\'' +
-                ", users=" + users +
                 '}';
     }
 
