@@ -66,3 +66,7 @@ todo -- download song & store it when creating a new song with ytdownload
 -- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3
 -- verify bcrypt passwordEncoder when creating a new user / authenticate user : done
 test auth with failed password : done
+
+bodyRequest on "/authenticate" must be the password without encryption.
+Because encrypt pwd in frontend must introduce a security failure.
+(giving the hash, and the hashMethod in the source code on the client side)
