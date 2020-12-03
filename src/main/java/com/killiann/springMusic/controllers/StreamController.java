@@ -1,6 +1,6 @@
 package com.killiann.springMusic.controllers;
 
-import org.springframework.core.io.FileSystemResource;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,12 +11,12 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 @Controller
 public class StreamController {
+
+    org.slf4j.Logger logger = LoggerFactory.getLogger(StreamController.class);
 
     StreamController() { }
 
@@ -27,6 +27,7 @@ public class StreamController {
     public ResponseEntity<StreamingResponseBody> stream(@PathVariable String filename, HttpServletResponse response) throws IOException {
         path += filename;
         final File file = new File(path);
+        logger.info(path);
 
         if (file.exists()) {
             byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -34,8 +35,8 @@ public class StreamController {
                 out.write(fileContent);
             };
             return new ResponseEntity<>(stream, HttpStatus.OK);
-        }else {
-            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

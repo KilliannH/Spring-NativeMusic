@@ -14,7 +14,7 @@ public class Album {
     private Long id;
     private String title;
 
-    // by default Spring will create a new column named as "image_url"
+    // by default Spring will create a new column named "image_url"
     private String imageUrl;
 
     @JsonIgnoreProperties({"artists", "albums"})

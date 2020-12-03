@@ -36,8 +36,6 @@ public class Artist {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
-                ", songs='" + songs + '\'' +
-                ", albums='" + albums + '\'' +
                 '}';
     }
 
