@@ -42,7 +42,7 @@ Querying one album will show a list of albums with a list of songs foreach album
 
 All API responses are properly Serialized by Jackson.
 
-The db has two tables at startup : user & uer_role.
+The db has two tables at startup : user & user_role.
 
 user:
 - username
