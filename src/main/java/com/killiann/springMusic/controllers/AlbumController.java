@@ -47,7 +47,7 @@ public class AlbumController {
             // Witch is what we want for this kind of manipulation.
             album.getArtists().add(artist);
             return albumRepository.save(album);
-        }).orElseThrow(() -> new SongNotFoundException(id));
+        }).orElseThrow(() -> new AlbumNotFoundException(id));
     }
     // Single item
 

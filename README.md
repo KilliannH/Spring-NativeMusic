@@ -57,3 +57,12 @@ user_role:
 - role
 
 fk (username) references users (username)
+
+all API is secured by a token Based authentication :
+authentication endpoint : "/authenticate"
+user has to be an admin to use api endpoints
+
+todo -- download song & store it when creating a new song with ytdownload
+-- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3
+-- verify bcrypt passwordEncoder when creating a new user / authenticate user : done
+test auth with failed password : done

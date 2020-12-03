@@ -1,6 +1,8 @@
 package com.killiann.springMusic.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.killiann.springMusic.deserializer.BCryptPasswordDeserializer;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -13,6 +15,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+
+    @JsonDeserialize(using = BCryptPasswordDeserializer.class)
     private String password;
     private Boolean enabled;
 
