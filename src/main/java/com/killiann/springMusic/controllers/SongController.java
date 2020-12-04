@@ -1,5 +1,8 @@
 package com.killiann.springMusic.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.killiann.springMusic.exceptions.AlbumNotFoundException;
 import com.killiann.springMusic.exceptions.ArtistNotFoundException;
 import com.killiann.springMusic.exceptions.SongNotFoundException;
@@ -34,7 +37,18 @@ public class SongController {
     }
 
     @PostMapping("/songs")
-    Song newSong(@RequestBody Song newSong) {
+    Song newSong(@RequestBody String jsonString) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // serialize String to Json as ytUrl is not part of Song model.
+        JsonNode jsonNode = objectMapper.readTree(jsonString);
+        String ytUrl = jsonNode.get("ytUrl").textValue();
+        Song newSong = objectMapper.readValue(jsonNode.get("song").toString(), Song.class);
+
+        // all data has been retrieved now download song
+        // todo @khervagault -- impl this
+
+        // and then if all goes well, save the newly created song
         return songRepository.save(newSong);
     }
 

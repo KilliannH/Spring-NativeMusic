@@ -67,6 +67,18 @@ todo -- download song & store it when creating a new song with ytdownload
 -- verify bcrypt passwordEncoder when creating a new user / authenticate user : done
 test auth with failed password : done
 
+toString method on Models does not include relationship because app crashes when querying relations & JPA session is closed,
+because relations are lazy loaded (except users <-> roles, relation is Eagger).
+ 
 bodyRequest on "/authenticate" must be the password without encryption.
 Because encrypt pwd in frontend must introduce a security failure.
 (giving the hash, and the hashMethod in the source code on the client side)
+
+-- post /songs/
+{
+    "ytUrl": "my.youtube.url",
+    "song": {
+        "title": "myTitle",
+        "filename": "myFilename.mp3"
+    }
+}
