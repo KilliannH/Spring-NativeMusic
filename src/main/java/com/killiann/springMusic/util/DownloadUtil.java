@@ -38,7 +38,7 @@ public class DownloadUtil {
                 if (line.contains("Deleting original file")) {
 
                     originalFilename = line.split("Deleting original file ")[1];
-                    originalFilename = filename.split(".webm")[0];
+                    originalFilename = originalFilename.split(".webm")[0];
                 }
             }
 
