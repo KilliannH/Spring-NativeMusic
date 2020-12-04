@@ -39,6 +39,7 @@ public class DownloadUtil {
 
                     originalFilename = line.split("Deleting original file ")[1];
                     originalFilename = originalFilename.split(".webm")[0];
+                    originalFilename += ".mp3";
                 }
             }
 
