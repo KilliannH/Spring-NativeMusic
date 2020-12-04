@@ -24,6 +24,8 @@ public class SongController {
     private final ArtistRepository artistRepository;
     private final AlbumRepository albumRepository;
 
+    private final boolean isWindows = System.getProperty("os.name").contains("Windows");
+
     SongController(SongRepository songRepository, ArtistRepository artistRepository, AlbumRepository albumRepository) {
         this.songRepository = songRepository;
         this.artistRepository = artistRepository;
@@ -47,16 +49,17 @@ public class SongController {
         Song newSong = objectMapper.readValue(jsonNode.get("song").toString(), Song.class);
 
         // all data has been retrieved now download the song
-        DownloadUtil downloadUtil = new DownloadUtil(newSong.getFilename(), ytUrl);
-        try {
-            downloadUtil.callYtDownload();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(!isWindows) {
+            DownloadUtil downloadUtil = new DownloadUtil(newSong.getFilename(), ytUrl);
+            try {
+                downloadUtil.callYtDownload();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         // and then if all goes well, save the newly created song
-
-        return null; //songRepository.save(newSong);
+        return songRepository.save(newSong);
     }
 
     // create relationships

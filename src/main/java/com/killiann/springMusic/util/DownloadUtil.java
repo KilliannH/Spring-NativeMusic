@@ -1,33 +1,27 @@
 package com.killiann.springMusic.util;
 
-import com.killiann.springMusic.controllers.StreamController;
-import org.slf4j.LoggerFactory;
-
 import java.io.*;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class DownloadUtil {
 
-    org.slf4j.Logger logger = LoggerFactory.getLogger(StreamController.class);
-
     String filename;
     String ytUrl;
     private final ResourceBundle rb = ResourceBundle.getBundle("config");
-    private final String path = rb.getString("song.base.dir");
-    private boolean isWindows = System.getProperty("os.name").contains("Windows");
+    private final String songDirPath = rb.getString("song.base.dir");
 
     public DownloadUtil(String filename, String ytUrl) {
         this.filename = filename;
         this.ytUrl = ytUrl;
-        logger.info("Java running on " + System.getProperty("os.name"));
     }
 
-    public void callYtDownload() throws IOException {
-        String [] command = {isWindows ? "CMD" : "bash", isWindows ? "/C" : "-c", "youtube-dl " + this.ytUrl + " " + "--extract-audio --audio-format mp3 --audio-quality 0"};
+    // not working on windows.. skip dl for dev purposes
+    public void callYtDownload() {
+        String [] command = {"bash", "-c", "youtube-dl " + this.ytUrl + " " + "--extract-audio --audio-format mp3 --audio-quality 0"};
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
-            pb.directory(new File(path));
+            pb.directory(new File(songDirPath));
             Process p = pb.start();
 
             InputStream inputStream = p.getErrorStream();
@@ -51,7 +45,8 @@ public class DownloadUtil {
                 e.printStackTrace();
             }
         }
-        catch (IOException e)
-        { e.printStackTrace(); }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
