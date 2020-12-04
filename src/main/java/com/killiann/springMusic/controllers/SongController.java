@@ -12,6 +12,7 @@ import com.killiann.springMusic.models.Song;
 import com.killiann.springMusic.repositories.AlbumRepository;
 import com.killiann.springMusic.repositories.ArtistRepository;
 import com.killiann.springMusic.repositories.SongRepository;
+import com.killiann.springMusic.util.DownloadUtil;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,11 +46,17 @@ public class SongController {
         String ytUrl = jsonNode.get("ytUrl").textValue();
         Song newSong = objectMapper.readValue(jsonNode.get("song").toString(), Song.class);
 
-        // all data has been retrieved now download song
-        // todo @khervagault -- impl this
+        // all data has been retrieved now download the song
+        DownloadUtil downloadUtil = new DownloadUtil(newSong.getFilename(), ytUrl);
+        try {
+            downloadUtil.callYtDownload();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // and then if all goes well, save the newly created song
-        return songRepository.save(newSong);
+
+        return null; //songRepository.save(newSong);
     }
 
     // create relationships
