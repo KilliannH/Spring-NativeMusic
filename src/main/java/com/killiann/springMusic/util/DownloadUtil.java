@@ -64,7 +64,7 @@ public class DownloadUtil {
     }
 
     private int renameAndFinalize(String originalFilename) {
-        String[] command = {"bash", "-c", "mv ./" + originalFilename + " " + this.filename};
+        String[] command = {"bash", "-c", "mv ./" + '\"' + originalFilename + "\" " + this.filename};
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.directory(new File(songDirPath));
