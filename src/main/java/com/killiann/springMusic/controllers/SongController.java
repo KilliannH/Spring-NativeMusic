@@ -13,6 +13,8 @@ import com.killiann.springMusic.repositories.AlbumRepository;
 import com.killiann.springMusic.repositories.ArtistRepository;
 import com.killiann.springMusic.repositories.SongRepository;
 import com.killiann.springMusic.util.DownloadUtil;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +54,10 @@ public class SongController {
         if(!isWindows) {
             DownloadUtil downloadUtil = new DownloadUtil(newSong.getFilename(), ytUrl);
             try {
-                downloadUtil.callYtDownload();
+                int process = downloadUtil.runYtDownload();
+                if(process == 0) {
+                    return null;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

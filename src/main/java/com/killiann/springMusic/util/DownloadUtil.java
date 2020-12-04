@@ -17,14 +17,15 @@ public class DownloadUtil {
     }
 
     // not working on windows.. skip dl for dev purposes
-    public void callYtDownload() {
-        String [] command = {"bash", "-c", "youtube-dl " + this.ytUrl + " " + "--extract-audio --audio-format mp3 --audio-quality 0"};
+    public int runYtDownload() {
+        String[] command = {"bash", "-c", "youtube-dl " + this.ytUrl + " " + "--extract-audio --audio-format mp3 --audio-quality 0"};
+        String originalFilename = "";
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.directory(new File(songDirPath));
             Process p = pb.start();
 
-            InputStream inputStream = p.getErrorStream();
+            InputStream inputStream = p.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -34,19 +35,57 @@ public class DownloadUtil {
                     Arrays.toString(command));
             while ((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);
+                if (line.contains("Deleting original file")) {
+
+                    originalFilename = line.split("Deleting original file ")[1];
+                    originalFilename = filename.split(".webm")[0];
+                }
             }
 
             //Wait to get exit value
             try {
                 int exitValue = p.waitFor();
                 System.out.println("\n\nExit Value is " + exitValue);
+                if (exitValue == 0) { // Success
+                    p.destroy();
+                    return renameAndFinalize(originalFilename);
+                } else {
+                    p.destroy();
+                }
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
+                p.destroy();
                 e.printStackTrace();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        return 0;
+    }
+
+    private int renameAndFinalize(String originalFilename) {
+        String[] command = {"bash", "-c", "mv ./" + originalFilename + " " + this.filename};
+        try {
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.directory(new File(songDirPath));
+            Process p = pb.start();
+
+            System.out.printf("Output of running %s is:\n",
+                    Arrays.toString(command));
+
+            try {
+                int exitValue = p.waitFor();
+                System.out.println("\n\nExit Value is " + exitValue);
+                p.destroy();
+                return exitValue;
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                p.destroy();
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
