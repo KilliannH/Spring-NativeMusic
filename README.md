@@ -1,15 +1,15 @@
 Backend structure :
-3 Tables, song artist, album
+3 Tables, songs, artists, albums
 
-song:
+songs:
 - title
 - filename
 
-artist:
+artists:
 - name
 - image_url
 
-album:
+albums:
 - title
 - image_url
 
@@ -25,16 +25,16 @@ remove
 delete /songs/id/artists/artistId
 delete /albums/id/artists/artistId
 
-nb: you cannot update an already created relationship. Instead you have to remove and recreate the relation.
+nb: you cannot update an already created relationship. You have to remove and recreate it instead.
 
 CRUD on all tables. Relations are made after a content is created.
-when post a new song, youtube_url must be present to perform a download.
+when creating a new song, ytUrl property must be present to perform a download.
+cf. post songs schema bellow.
 
 related songs for artists might be handled by song controller 
 related artists for albums might be handled by album controller 
 
-
-// since the relationships are  bidirectional, it will be seen when querying an artist as well
+// Relationships are  bidirectional.
 
 Querying one song will show a list of songs with a list of artists foreach songs & a list of albums foreach songs.
 Querying one artist will show a list of artists with a list of songs foreach artists & a list of albums foreach artists.
@@ -42,7 +42,8 @@ Querying one album will show a list of albums with a list of songs foreach album
 
 All API responses are properly Serialized by Jackson.
 
-The db has two tables at startup : user & user_role.
+The db has three tables on startup : users, roles & users_roles.
+There must be an sql file to create those tables & feed them with some data.
 
 user:
 - username
@@ -58,12 +59,12 @@ user_role:
 
 fk (username) references users (username)
 
-all API is secured by a token Based authentication :
+The API is properly secured by a token Based authentication :
 authentication endpoint : "/authenticate"
-user has to be an admin to use api endpoints
+Currently, user has to be registered with ROLE_ADMIN privileges to query endpoints
 
 todo -- download song & store it when creating a new song with ytdownload
--- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3
+-- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3: done
 -- verify bcrypt passwordEncoder when creating a new user / authenticate user : done
 test auth with failed password : done
 
