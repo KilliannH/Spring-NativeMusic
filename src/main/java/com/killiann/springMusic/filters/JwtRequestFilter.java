@@ -2,7 +2,7 @@ package com.killiann.springMusic.filters;
 
 import com.killiann.springMusic.models.Role;
 import com.killiann.springMusic.models.User;
-import com.killiann.springMusic.repositories.RoleRepository;
+
 import com.killiann.springMusic.repositories.UserRepository;
 import com.killiann.springMusic.util.JwtUtil;
 

@@ -2,10 +2,8 @@ package com.killiann.springMusic.controllers;
 
 import com.killiann.springMusic.exceptions.AlbumNotFoundException;
 import com.killiann.springMusic.exceptions.ArtistNotFoundException;
-import com.killiann.springMusic.exceptions.SongNotFoundException;
 import com.killiann.springMusic.models.Album;
 import com.killiann.springMusic.models.Artist;
-import com.killiann.springMusic.models.Song;
 import com.killiann.springMusic.repositories.AlbumRepository;
 import com.killiann.springMusic.repositories.ArtistRepository;
 import org.springframework.web.bind.annotation.*;
