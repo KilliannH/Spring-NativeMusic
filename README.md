@@ -1,3 +1,5 @@
+current release is : v1.1-beta
+----------------
 Backend structure :
 3 Tables, songs, artists, albums
 
@@ -61,7 +63,7 @@ fk (username) references users (username)
 
 The API is properly secured by a token Based authentication :
 authentication endpoint : "/authenticate"
-Currently, user has to be registered with ROLE_ADMIN privileges to query endpoints
+Currently, user has to be registered with ROLE_USER privileges to query endpoints
 
 todo -- download song & store it when creating a new song with ytdownload
 -- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3: done
