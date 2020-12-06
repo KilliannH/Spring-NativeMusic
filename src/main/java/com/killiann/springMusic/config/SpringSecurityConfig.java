@@ -52,12 +52,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         ResourceBundle rb = ResourceBundle.getBundle("config");
-        String path = rb.getString("war.name");
+        String warName = rb.getString("war.name");
 
         http
                 //HTTP Basic authentication
         .csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate/**").permitAll()
+                .authorizeRequests().antMatchers("/" + warName + "/authenticate/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
                 .exceptionHandling().and().sessionManagement()
