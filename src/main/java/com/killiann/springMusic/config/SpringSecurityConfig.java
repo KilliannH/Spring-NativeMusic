@@ -16,7 +16,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
-import java.util.ResourceBundle;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -50,14 +49,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     // Secure the endpoints with HTTP Basic authentication
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        ResourceBundle rb = ResourceBundle.getBundle("config");
-        String warName = rb.getString("war.name");
-
         http
                 //HTTP Basic authentication
         .csrf().disable()
-                .authorizeRequests().antMatchers("/" + warName + "/authenticate/**").permitAll()
+                .authorizeRequests().antMatchers("/authenticate/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
                 .exceptionHandling().and().sessionManagement()
