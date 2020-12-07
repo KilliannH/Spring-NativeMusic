@@ -21,9 +21,8 @@ public class DownloadUtil {
         String[] command = {"bash", "-c", "youtube-dl " + this.ytUrl + " " + "--extract-audio --audio-format mp3 --audio-quality 0"};
         String originalFilename = "";
         try {
-            ProcessBuilder pb = new ProcessBuilder(command);
-            pb.directory(new File(songDirPath));
-            Process p = pb.start();
+            Process p = Runtime.getRuntime()
+                    .exec(command, null, new File(songDirPath));
 
             InputStream inputStream = p.getInputStream();
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
