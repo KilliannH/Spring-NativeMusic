@@ -18,7 +18,7 @@ public class DownloadUtil {
 
     // not working on windows.. skip dl for dev purposes
     public int runYtDownload() {
-        String[] command = {"bash", "-c", "youtube-dl " + this.ytUrl + " " + "--extract-audio --audio-format mp3 --audio-quality 0"};
+        String[] command = {"/bin/bash", "-c", "youtube-dl " + this.ytUrl + " " + "--extract-audio --audio-format mp3 --audio-quality 0"};
         String originalFilename = "";
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
@@ -65,7 +65,7 @@ public class DownloadUtil {
     }
 
     private int renameAndFinalize(String originalFilename) {
-        String[] command = {"bash", "-c", "mv ./" + '\"' + originalFilename + "\" " + this.filename};
+        String[] command = {"/bin/bash", "-c", "mv ./" + '\"' + originalFilename + "\" " + this.filename};
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.directory(new File(songDirPath));
