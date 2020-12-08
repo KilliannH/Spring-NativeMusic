@@ -22,13 +22,7 @@ public class DownloadUtil {
         String originalFilename = "";
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
-
-            pb.environment().put("PATH",
-                    "/bin/bash" + File.pathSeparator + System.getenv("PATH"));
             pb.directory(new File(songDirPath));
-
-            System.out.print("" + pb.environment().toString());
-
             Process p = pb.start();
 
             InputStream inputStream = p.getInputStream();
@@ -74,15 +68,8 @@ public class DownloadUtil {
         String[] command = {"bash", "-c", "mv ./" + '\"' + originalFilename + "\" " + this.filename};
         try {
             ProcessBuilder pb = new ProcessBuilder(command);
-
-            pb.environment().put("PATH",
-                    "/bin/bash" + File.pathSeparator + System.getenv("PATH"));
-
             pb.directory(new File(songDirPath));
             Process p = pb.start();
-
-            System.out.printf("Output of running %s is:\n",
-                    Arrays.toString(command));
 
             try {
                 int exitValue = p.waitFor();
