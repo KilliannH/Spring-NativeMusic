@@ -11,7 +11,6 @@
 	<groupId>com.killiann</groupId>
 	<artifactId>springMusic</artifactId>
 	<version>v1.1-beta</version>
-	<packaging>war</packaging>
 	<name>springMusic</name>
 	<description>A project to learn Spring Boot</description>
 
@@ -51,11 +50,6 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
