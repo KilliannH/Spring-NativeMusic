@@ -54,7 +54,7 @@ public class SongController {
             try {
                 int process = downloadUtil.runYtDownload();
                 if(process == 0) {
-                    return null;
+                    return songRepository.save(newSong);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
