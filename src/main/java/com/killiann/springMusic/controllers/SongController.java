@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.killiann.springMusic.constants.MyLinks.APP_CONTEXT;
+
 @RestController
 public class SongController {
 
@@ -34,12 +36,12 @@ public class SongController {
 
     // Aggregate root
 
-    @GetMapping("/songs")
+    @GetMapping(APP_CONTEXT + "/songs")
     List<Song> all() {
         return songRepository.findAll();
     }
 
-    @PostMapping("/songs")
+    @PostMapping(APP_CONTEXT + "/songs")
     Song newSong(@RequestBody String jsonString) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -67,7 +69,7 @@ public class SongController {
 
     // create relationships
 
-    @PostMapping("/songs/{song_id}/artists/{id}")
+    @PostMapping(APP_CONTEXT + "/songs/{song_id}/artists/{id}")
     Song newSongArtist(@PathVariable Long song_id, @PathVariable Long id) {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
         return songRepository.findById(song_id).map(song -> {
@@ -80,7 +82,7 @@ public class SongController {
         }).orElseThrow(() -> new SongNotFoundException(id));
     }
 
-    @PostMapping("/songs/{song_id}/albums/{id}")
+    @PostMapping(APP_CONTEXT + "/songs/{song_id}/albums/{id}")
     Song newSongAlbum(@PathVariable Long song_id, @PathVariable Long id) {
         Album album = albumRepository.findById(id).orElseThrow(() -> new AlbumNotFoundException(id));
         return songRepository.findById(song_id).map(song -> {
@@ -95,14 +97,14 @@ public class SongController {
 
     // Single item
 
-    @GetMapping("/songs/{id}")
+    @GetMapping(APP_CONTEXT + "/songs/{id}")
     Song one(@PathVariable Long id) {
 
         return songRepository.findById(id)
                 .orElseThrow(() -> new SongNotFoundException(id));
     }
 
-    @PutMapping("/songs/{id}")
+    @PutMapping(APP_CONTEXT + "/songs/{id}")
     Song replaceSong(@RequestBody Song newSong, @PathVariable Long id) {
 
         return songRepository.findById(id)
@@ -115,14 +117,14 @@ public class SongController {
                 .orElseThrow(() -> new SongNotFoundException(id));
     }
 
-    @DeleteMapping("/songs/{id}")
+    @DeleteMapping(APP_CONTEXT + "/songs/{id}")
     void deleteSong(@PathVariable Long id) {
         songRepository.deleteById(id);
     }
 
     // remove relationships
 
-    @DeleteMapping("/songs/{song_id}/artists/{id}")
+    @DeleteMapping(APP_CONTEXT + "/songs/{song_id}/artists/{id}")
     Song deleteSongArtist(@PathVariable Long song_id, @PathVariable Long id) {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
         return songRepository.findById(song_id).map(song -> {
@@ -131,7 +133,7 @@ public class SongController {
         }).orElseThrow(() -> new SongNotFoundException(id));
     }
 
-    @DeleteMapping("/songs/{song_id}/albums/{id}")
+    @DeleteMapping(APP_CONTEXT + "/songs/{song_id}/albums/{id}")
     Song deleteSongAlbum(@PathVariable Long song_id, @PathVariable Long id) {
         Album album = albumRepository.findById(id).orElseThrow(() -> new AlbumNotFoundException(id));
         return songRepository.findById(song_id).map(song -> {

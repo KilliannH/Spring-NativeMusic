@@ -13,21 +13,24 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.ResourceBundle;
 
+import static com.killiann.springMusic.constants.MyLinks.APP_CONTEXT;
+
 @Controller
 public class StreamController {
 
-    org.slf4j.Logger logger = LoggerFactory.getLogger(StreamController.class);
+    // here is a usage of slf4j logger
+    // org.slf4j.Logger logger = LoggerFactory.getLogger(StreamController.class);
 
     StreamController() { }
 
     ResourceBundle rb = ResourceBundle.getBundle("config");
     private String path = rb.getString("song.base.dir");
 
-    @GetMapping("/stream/{filename}")
+    @GetMapping(APP_CONTEXT + "/stream/{filename}")
     public ResponseEntity<StreamingResponseBody> stream(@PathVariable String filename, HttpServletResponse response) throws IOException {
         path += filename;
         final File file = new File(path);
-        logger.info(path);
+        // logger.info(path);
 
         if (file.exists()) {
             byte[] fileContent = Files.readAllBytes(file.toPath());

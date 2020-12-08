@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ResourceBundle;
+import static com.killiann.springMusic.constants.MyLinks.APP_CONTEXT;
 
 @RestController
 public class AuthController {
@@ -31,7 +31,7 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(value = "/myAppContext/authenticate")
+    @PostMapping(APP_CONTEXT + "/myAppContext/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         try {

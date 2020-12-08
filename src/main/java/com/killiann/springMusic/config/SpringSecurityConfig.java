@@ -16,13 +16,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
-import java.util.ResourceBundle;
+
+import static com.killiann.springMusic.constants.MyLinks.APP_CONTEXT;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private final ResourceBundle rb = ResourceBundle.getBundle("config");
-    private final String appContext = rb.getString("app.context");
 
     @Autowired
     DataSource dataSource;
@@ -57,7 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 //HTTP Basic authentication
                 .csrf().disable()
                 .authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers(appContext + "/authenticate/**").permitAll()
+                .antMatchers(APP_CONTEXT + "/authenticate/**").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
                 .exceptionHandling().and().sessionManagement()

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.killiann.springMusic.constants.MyLinks.APP_CONTEXT;
+
 @RestController
 public class ArtistController {
 
@@ -18,7 +20,7 @@ public class ArtistController {
 
     // Aggregate root
 
-    @GetMapping("/artists")
+    @GetMapping(APP_CONTEXT + "/artists")
     List<Artist> all() {
         return repository.findAll();
     }
@@ -30,14 +32,14 @@ public class ArtistController {
 
     // Single item
 
-    @GetMapping("/artists/{id}")
+    @GetMapping(APP_CONTEXT + "/artists/{id}")
     Artist one(@PathVariable Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new ArtistNotFoundException(id));
     }
 
-    @PutMapping("/artists/{id}")
+    @PutMapping(APP_CONTEXT + "/artists/{id}")
     Artist replaceArtist(@RequestBody Artist newArtist, @PathVariable Long id) {
 
         return repository.findById(id)
@@ -50,7 +52,7 @@ public class ArtistController {
                 .orElseThrow(() -> new ArtistNotFoundException(id));
     }
 
-    @DeleteMapping("/artists/{id}")
+    @DeleteMapping(APP_CONTEXT + "/artists/{id}")
     void deleteArtist(@PathVariable Long id) {
         repository.deleteById(id);
     }

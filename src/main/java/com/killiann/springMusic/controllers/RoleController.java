@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.killiann.springMusic.constants.MyLinks.APP_CONTEXT;
+
 @RestController
 public class RoleController {
 
@@ -19,14 +21,14 @@ public class RoleController {
 
     // Aggregate root
 
-    @GetMapping("/roles")
+    @GetMapping(APP_CONTEXT + "/roles")
     List<Role> all() {
         return repository.findAll();
     }
 
     // Single item
 
-    @GetMapping("/roles/{id}")
+    @GetMapping(APP_CONTEXT + "/roles/{id}")
     Role one(@PathVariable Long id) {
 
         return repository.findById(id)
@@ -35,12 +37,12 @@ public class RoleController {
 
     // Roles would be exclusively in this format : "ROLE_" + rolename in majs ex. ROLE_USER
     // this is because we need to match the UserDetails Object provided by Spring Security.
-    @PostMapping("/roles")
+    @PostMapping(APP_CONTEXT + "/roles")
     Role newRole(@RequestBody Role newRole) {
         return repository.save(newRole);
     }
 
-    @PutMapping("/roles/{id}")
+    @PutMapping(APP_CONTEXT + "/roles/{id}")
     Role replaceRole(@RequestBody Role newRole, @PathVariable Long id) {
 
         return repository.findById(id)
@@ -53,7 +55,7 @@ public class RoleController {
 
 
 
-    @DeleteMapping("/roles/{id}")
+    @DeleteMapping(APP_CONTEXT + "/roles/{id}")
     void deleteRole(@PathVariable Long id) {
         repository.deleteById(id);
     }

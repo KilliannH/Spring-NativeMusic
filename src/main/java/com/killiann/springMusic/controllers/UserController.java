@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.killiann.springMusic.constants.MyLinks.APP_CONTEXT;
+
 @RestController
 public class UserController {
 
@@ -25,14 +27,14 @@ public class UserController {
 
     // Aggregate root
 
-    @GetMapping("/users")
+    @GetMapping(APP_CONTEXT + "/users")
     List<User> all() {
         return userRepository.findAll();
     }
 
     // create relationships
 
-    @PostMapping("/users/{user_id}/roles/{id}")
+    @PostMapping(APP_CONTEXT + "/users/{user_id}/roles/{id}")
     User newUserRole(@PathVariable Long user_id, @PathVariable Long id) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new RoleNotFoundException(id));
         return userRepository.findById(user_id).map(user -> {
@@ -44,20 +46,20 @@ public class UserController {
 
     // Single item
 
-    @GetMapping("/users/{id}")
+    @GetMapping(APP_CONTEXT + "/users/{id}")
     User one(@PathVariable Long id) {
 
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @PostMapping("/users")
+    @PostMapping(APP_CONTEXT + "/users")
     User newUser(@RequestBody User newUser) {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping(APP_CONTEXT + "/users/{id}")
     User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
 
         return userRepository.findById(id)
@@ -69,14 +71,14 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping(APP_CONTEXT + "/users/{id}")
     void deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
     }
 
     // remove relationships
 
-    @DeleteMapping("/users/{user_id}/roles/{id}")
+    @DeleteMapping(APP_CONTEXT + "/users/{user_id}/roles/{id}")
     User deleteUserRoles(@PathVariable Long user_id, @PathVariable Long id) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new RoleNotFoundException(id));
         return userRepository.findById(user_id).map(user -> {
