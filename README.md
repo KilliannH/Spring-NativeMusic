@@ -1,4 +1,4 @@
-current release is : v1.1-beta
+current release is : v1.1
 ----------------
 Backend structure :
 3 Tables, songs, artists, albums
@@ -85,3 +85,5 @@ Because encrypt pwd in frontend must introduce a security failure.
         "filename": "myFilename.mp3"
     }
 }
+
+remeber to set your app context in constants/MyLinks.java
