@@ -31,7 +31,7 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
-    @PostMapping(APP_CONTEXT + "/myAppContext/authenticate")
+    @PostMapping(APP_CONTEXT + "/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
 
         try {
