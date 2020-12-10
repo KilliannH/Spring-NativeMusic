@@ -23,19 +23,19 @@ public class AlbumController {
 
     // Aggregate root
 
-    @GetMapping("albums")
+    @GetMapping("/albums")
     List<Album> all() {
         return albumRepository.findAll();
     }
 
-    @PostMapping("albums")
+    @PostMapping("/albums")
     Album newAlbum(@RequestBody Album newAlbum) {
         return albumRepository.save(newAlbum);
     }
 
     // create relationships
 
-    @PostMapping("albums/{album_id}/artists/{id}")
+    @PostMapping("/albums/{album_id}/artists/{id}")
     Album newAlbumArtist(@PathVariable Long album_id, @PathVariable Long id) {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
         return albumRepository.findById(album_id).map(album -> {
@@ -49,14 +49,14 @@ public class AlbumController {
     }
     // Single item
 
-    @GetMapping("albums/{id}")
+    @GetMapping("/albums/{id}")
     Album one(@PathVariable Long id) {
 
         return albumRepository.findById(id)
                 .orElseThrow(() -> new AlbumNotFoundException(id));
     }
 
-    @PutMapping("albums/{id}")
+    @PutMapping("/albums/{id}")
     Album replaceAlbum(@RequestBody Album newAlbum, @PathVariable Long id) {
 
         return albumRepository.findById(id)
@@ -69,14 +69,14 @@ public class AlbumController {
                 .orElseThrow(() -> new AlbumNotFoundException(id));
     }
 
-    @DeleteMapping("albums/{id}")
+    @DeleteMapping("/albums/{id}")
     void deleteAlbum(@PathVariable Long id) {
         albumRepository.deleteById(id);
     }
 
     // remove relationships
 
-    @DeleteMapping("albums/{album_id}/artists/{id}")
+    @DeleteMapping("/albums/{album_id}/artists/{id}")
     Album deleteAlbumArtist(@PathVariable Long album_id, @PathVariable Long id) {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
         return albumRepository.findById(album_id).map(album -> {

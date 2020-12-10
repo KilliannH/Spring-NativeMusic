@@ -18,26 +18,26 @@ public class ArtistController {
 
     // Aggregate root
 
-    @GetMapping("artists")
+    @GetMapping("/artists")
     List<Artist> all() {
         return repository.findAll();
     }
 
-    @PostMapping("artists")
+    @PostMapping("/artists")
     Artist newArtist(@RequestBody Artist newArtist) {
         return repository.save(newArtist);
     }
 
     // Single item
 
-    @GetMapping("artists/{id}")
+    @GetMapping("/artists/{id}")
     Artist one(@PathVariable Long id) {
 
         return repository.findById(id)
                 .orElseThrow(() -> new ArtistNotFoundException(id));
     }
 
-    @PutMapping("artists/{id}")
+    @PutMapping("/artists/{id}")
     Artist replaceArtist(@RequestBody Artist newArtist, @PathVariable Long id) {
 
         return repository.findById(id)
@@ -50,7 +50,7 @@ public class ArtistController {
                 .orElseThrow(() -> new ArtistNotFoundException(id));
     }
 
-    @DeleteMapping("artists/{id}")
+    @DeleteMapping("/artists/{id}")
     void deleteArtist(@PathVariable Long id) {
         repository.deleteById(id);
     }
