@@ -1,4 +1,4 @@
-current release is : v1.1
+current release is : v1.2
 ----------------
 Backend structure :
 3 Tables, songs, artists, albums
@@ -65,25 +65,18 @@ The API is properly secured by a token Based authentication :
 authentication endpoint : "/authenticate"
 Currently, user has to be registered with ROLE_USER privileges to query endpoints
 
-todo -- download song & store it when creating a new song with ytdownload
--- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3: done
--- verify bcrypt passwordEncoder when creating a new user / authenticate user : done
+todo -- download song & store it when creating a new song with ytdownload : done on a separate nodejs server
+-- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3: done on nodejs server
 test auth with failed password : done
 
 toString method on Models does not include relationship because app crashes when querying relations & JPA session is closed,
 because relations are lazy loaded (except users <-> roles, relation is Eagger).
  
-bodyRequest on "/authenticate" must be the password without encryption.
-Because encrypt pwd in frontend must introduce a security failure.
-(giving the hash, and the hashMethod in the source code on the client side)
-
 -- post /songs/
 {
-    "ytUrl": "my.youtube.url",
-    "song": {
-        "title": "myTitle",
-        "filename": "myFilename.mp3"
-    }
+    "title": "myTitle",
+    "filename": "myFilename.mp3"
 }
+-- limit queries (by ids): example /songs/limit?start=0&end=10
 
-remeber to set your app context in constants/MyLinks.java
+remember to set your app context in application.properties
