@@ -9,6 +9,9 @@ import com.killiann.springMusic.models.Song;
 import com.killiann.springMusic.repositories.AlbumRepository;
 import com.killiann.springMusic.repositories.ArtistRepository;
 import com.killiann.springMusic.repositories.SongRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +30,12 @@ public class SongController {
     }
 
     // Aggregate root
+
+    @GetMapping("/songs/limit")
+    Page<Song> limit(@RequestParam Integer start, @RequestParam Integer end) {
+        return songRepository.findAll(
+                    PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "id")));
+    }
 
     @GetMapping("/songs")
     List<Song> all() {

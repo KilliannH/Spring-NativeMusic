@@ -4,8 +4,12 @@ import com.killiann.springMusic.exceptions.AlbumNotFoundException;
 import com.killiann.springMusic.exceptions.ArtistNotFoundException;
 import com.killiann.springMusic.models.Album;
 import com.killiann.springMusic.models.Artist;
+import com.killiann.springMusic.models.Song;
 import com.killiann.springMusic.repositories.AlbumRepository;
 import com.killiann.springMusic.repositories.ArtistRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +26,12 @@ public class AlbumController {
     }
 
     // Aggregate root
+
+    @GetMapping("/albums/limit")
+    Page<Album> limit(@RequestParam Integer start, @RequestParam Integer end) {
+        return albumRepository.findAll(
+                PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "id")));
+    }
 
     @GetMapping("/albums")
     List<Album> all() {
