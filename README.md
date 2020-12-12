@@ -1,4 +1,4 @@
-current release is : v1.2
+current release is : v1.3
 ----------------
 Backend structure :
 3 Tables, songs, artists, albums
@@ -15,22 +15,26 @@ albums:
 - title
 - image_url
 
-many to many bidirectional relations to all tables.
+many to many bidirectional relations on songs n <-> n artists, artists <-> albums.
+one to many bidirectional relation on songs n <-> 1 albums
 
 to manage relations :
 create
 post /songs/id/artists/artistId
 post /albums/id/artists/artistId
+post /songs/id/albums/albumId
 (no body needed)
 
 remove
 delete /songs/id/artists/artistId
 delete /albums/id/artists/artistId
+delete /songs/id/albums/delete // as only one album is related to n songs.
 
-nb: you cannot update an already created relationship. You have to remove and recreate it instead.
+nb for manyTomany: you cannot update an already created relationship. You have to remove and recreate it instead.
+    for oneToMany: a post over an already created relation will replace it.
 
-CRUD on all tables. Relations are made after a content is created.
-when creating a new song, ytUrl property must be present to perform a download.
+CRUD on all tables. Relations are made ALWAYS AFTER a content is created.
+when creating a new song, ytUrl property must be specified to perform a download.
 cf. post songs schema bellow.
 
 related songs for artists might be handled by song controller 

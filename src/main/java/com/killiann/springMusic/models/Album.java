@@ -17,8 +17,8 @@ public class Album {
     // by default Spring will create a new column named "image_url"
     private String imageUrl;
 
-    @JsonIgnoreProperties({"artists", "albums"})
-    @ManyToMany(mappedBy = "albums")
+    @JsonIgnoreProperties({"artists", "album"})
+    @OneToMany(mappedBy = "album")
     private Set<Song> songs = new HashSet<>();
 
     @JsonIgnoreProperties({"songs", "albums"})

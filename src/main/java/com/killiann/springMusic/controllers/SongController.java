@@ -68,7 +68,15 @@ public class SongController {
             // as this is a Set and not a List,
             // Set doesn't allow duplicates.
             // Witch is what we want for this kind of manipulation.
-            song.getAlbums().add(album);
+            song.setAlbum(album);
+            return songRepository.save(song);
+        }).orElseThrow(() -> new SongNotFoundException(id));
+    }
+
+    @PostMapping("/songs/{id}/albums/delete")
+    Song deleteSongAlbum(@PathVariable Long id) {
+        return songRepository.findById(id).map(song -> {
+            song.setAlbum(null);
             return songRepository.save(song);
         }).orElseThrow(() -> new SongNotFoundException(id));
     }
@@ -107,15 +115,6 @@ public class SongController {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new ArtistNotFoundException(id));
         return songRepository.findById(song_id).map(song -> {
             song.getArtists().remove(artist);
-            return songRepository.save(song);
-        }).orElseThrow(() -> new SongNotFoundException(id));
-    }
-
-    @DeleteMapping("/songs/{song_id}/albums/{id}")
-    Song deleteSongAlbum(@PathVariable Long song_id, @PathVariable Long id) {
-        Album album = albumRepository.findById(id).orElseThrow(() -> new AlbumNotFoundException(id));
-        return songRepository.findById(song_id).map(song -> {
-            song.getAlbums().remove(album);
             return songRepository.save(song);
         }).orElseThrow(() -> new SongNotFoundException(id));
     }

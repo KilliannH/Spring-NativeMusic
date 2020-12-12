@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.killiann</groupId>
 	<artifactId>springMusic</artifactId>
-	<version>v1.2</version>
+	<version>v1.3</version>
 	<name>springMusic</name>
 	<description>A project to learn Spring Boot</description>
 
