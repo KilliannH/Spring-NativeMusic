@@ -49,7 +49,7 @@ public class SongController {
 
         Set<Artist> artists = new HashSet<>();
 
-        JsonNode arrNode = objectMapper.readTree(jsonString);
+        JsonNode arrNode = objectMapper.readTree(jsonString).get("artistIds");
         if (arrNode.isArray()) {
             for (final JsonNode objNode : arrNode) {
                 Long artistId = objNode.asLong();
@@ -66,7 +66,7 @@ public class SongController {
         ObjectMapper objectMapper = new ObjectMapper();
 
         // serialize String to Json as ytUrl is not part of Song model.
-        JsonNode jsonNode = objectMapper.readTree(jsonString).get("albumId");
+        JsonNode jsonNode = objectMapper.readTree(jsonString);
         Long albumId = jsonNode.get("albumId").asLong();
 
         Album album = albumRepository.findById(albumId).orElseThrow(() -> new AlbumNotFoundException(albumId));
