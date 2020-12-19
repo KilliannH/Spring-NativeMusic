@@ -23,7 +23,7 @@ create
 post /songs/id/artists/artistId
 post /albums/id/artists/artistId
 post /songs/id/albums/albumId
-(no body needed)
+(no req body needed)
 
 remove
 delete /songs/id/artists/artistId

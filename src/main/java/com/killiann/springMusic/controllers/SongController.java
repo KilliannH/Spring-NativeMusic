@@ -1,5 +1,8 @@
 package com.killiann.springMusic.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.killiann.springMusic.exceptions.AlbumNotFoundException;
 import com.killiann.springMusic.exceptions.ArtistNotFoundException;
 import com.killiann.springMusic.exceptions.SongNotFoundException;
@@ -14,7 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class SongController {
@@ -35,6 +40,33 @@ public class SongController {
     Page<Song> limit(@RequestParam Integer start, @RequestParam Integer end) {
         return songRepository.findAll(
                     PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "id")));
+    }
+
+    @PostMapping("/songs/byArtists")
+    List<Song> byArtists(@RequestBody String jsonString) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Set<Long> artistIds = new HashSet<>();
+
+        // serialize String to Json as ytUrl is not part of Song model.
+        JsonNode arrNode = objectMapper.readTree(jsonString);
+        if (arrNode.isArray()) {
+            for (final JsonNode objNode : arrNode) {
+                artistIds.add(objNode.asLong());
+            }
+        }
+        return songRepository.findAllByArtistsId(artistIds);
+    }
+
+    @PostMapping("/songs/byAlbum")
+    List<Song> byAlbum(@RequestBody String jsonString) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // serialize String to Json as ytUrl is not part of Song model.
+        JsonNode jsonNode = objectMapper.readTree(jsonString).get("albumId");
+        Long albumId = jsonNode.get("albumId").asLong();
+
+        return songRepository.findAllByAlbumId(albumId);
     }
 
     @GetMapping("/songs")
