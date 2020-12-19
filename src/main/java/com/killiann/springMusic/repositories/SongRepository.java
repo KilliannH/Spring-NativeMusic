@@ -11,6 +11,6 @@ import java.util.Set;
 public interface SongRepository extends JpaRepository<Song, Long> {
 
     List<Song> findByTitle(String title);
-    List<Song> findAllByArtistsIn(Set<Artist> artists);
+    Set<Song> findAllByArtistsIn(Set<Artist> artists);
     List<Song> findAllByAlbum(Album album);
 }

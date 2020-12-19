@@ -44,7 +44,7 @@ public class SongController {
     }
 
     @PostMapping("/songs/byArtists")
-    List<Song> byArtists(@RequestBody String jsonString) throws JsonProcessingException {
+    Set<Song> byArtists(@RequestBody String jsonString) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         Set<Artist> artists = new HashSet<>();
@@ -58,6 +58,9 @@ public class SongController {
                 artists.add(artist);
             }
         }
+
+        System.out.println(artists.toString());
+
         return songRepository.findAllByArtistsIn(artists);
     }
 
