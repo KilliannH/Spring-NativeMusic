@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,16 +47,18 @@ public class SongController {
     List<Song> byArtists(@RequestBody String jsonString) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Set<Long> artistIds = new HashSet<>();
+        Set<Artist> artists = new HashSet<>();
 
-        // serialize String to Json as ytUrl is not part of Song model.
         JsonNode arrNode = objectMapper.readTree(jsonString);
         if (arrNode.isArray()) {
             for (final JsonNode objNode : arrNode) {
-                artistIds.add(objNode.asLong());
+                Long artistId = objNode.asLong();
+                Artist artist = artistRepository.findById(artistId)
+                        .orElseThrow(() -> new ArtistNotFoundException(artistId));
+                artists.add(artist);
             }
         }
-        return songRepository.findAllByArtistsId(artistIds);
+        return songRepository.findAllByArtistsIn(artists);
     }
 
     @PostMapping("/songs/byAlbum")
@@ -66,7 +69,9 @@ public class SongController {
         JsonNode jsonNode = objectMapper.readTree(jsonString).get("albumId");
         Long albumId = jsonNode.get("albumId").asLong();
 
-        return songRepository.findAllByAlbumId(albumId);
+        Album album = albumRepository.findById(albumId).orElseThrow(() -> new AlbumNotFoundException(albumId));
+
+        return songRepository.findAllByAlbum(album);
     }
 
     @GetMapping("/songs")
