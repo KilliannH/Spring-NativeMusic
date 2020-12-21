@@ -25,7 +25,7 @@ public class ArtistController {
     @GetMapping("/artists/limit")
     Page<Artist> limit(@RequestParam Integer start, @RequestParam Integer end) {
         return repository.findAll(
-                PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "id")));
+                PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "name")));
     }
 
     @GetMapping("/artists")

@@ -30,7 +30,7 @@ public class AlbumController {
     @GetMapping("/albums/limit")
     Page<Album> limit(@RequestParam Integer start, @RequestParam Integer end) {
         return albumRepository.findAll(
-                PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "id")));
+                PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "title")));
     }
 
     @GetMapping("/albums")

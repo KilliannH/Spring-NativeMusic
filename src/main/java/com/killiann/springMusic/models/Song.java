@@ -23,6 +23,14 @@ public class Song {
                     referencedColumnName = "id"))
     private Set<Artist> artists = new HashSet<>();
 
+    @JsonIgnoreProperties({"songs"})
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "songs_playlists",
+            joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "playlist_id",
+                    referencedColumnName = "id"))
+    private Set<Playlist> playlists = new HashSet<>();
+
     @JsonIgnoreProperties({"songs", "artists"})
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "album_id")
@@ -74,6 +82,14 @@ public class Song {
 
     public void setArtists(Set<Artist> artists) {
         this.artists = artists;
+    }
+
+    public Set<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Set<Playlist> playlists) {
+        this.playlists = playlists;
     }
 
     public Album getAlbum() {

@@ -12,6 +12,7 @@ import com.killiann.springMusic.models.Song;
 import com.killiann.springMusic.repositories.AlbumRepository;
 import com.killiann.springMusic.repositories.ArtistRepository;
 import com.killiann.springMusic.repositories.SongRepository;
+import org.hibernate.boot.model.source.spi.Sortable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -40,7 +41,7 @@ public class SongController {
     @GetMapping("/songs/limit")
     Page<Song> limit(@RequestParam Integer start, @RequestParam Integer end) {
         return songRepository.findAll(
-                    PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "id")));
+                    PageRequest.of(start, end, Sort.by(Sort.Direction.ASC, "title")));
     }
 
     @PostMapping("/songs/byArtists")
@@ -58,8 +59,6 @@ public class SongController {
                 artists.add(artist);
             }
         }
-
-        System.out.println(artists.toString());
 
         return songRepository.findAllByArtistsIn(artists);
     }
