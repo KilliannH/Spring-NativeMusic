@@ -69,9 +69,8 @@ The API is properly secured by a token Based authentication :
 authentication endpoint : "/authenticate"
 Currently, user has to be registered with ROLE_USER privileges to query endpoints
 
-todo -- download song & store it when creating a new song with ytdownload : done on a separate nodejs server
--- stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3: done on nodejs server
-test auth with failed password : done
+download song & store it with ytdownload is made by a separate nodejs server
+stream a song at "/stream" + song.filename ex. /stream/myMusic.mp3 is madeby a separate nodejs server
 
 toString method on Models does not include relationship because app crashes when querying relations & JPA session is closed,
 because relations are lazy loaded (except users <-> roles, relation is Eagger).
@@ -80,11 +79,9 @@ because relations are lazy loaded (except users <-> roles, relation is Eagger).
 {
     "title": "myTitle",
     "filename": "myFilename.mp3"
-}
--- limit queries (by ids): example /songs/limit?start=0&end=10
-
-remember to set your app context in application.properties
-
+GET /songs/limit?start=0&end=10
 POST /api/songs/byAlbum {albumId: 1}
 POST /api/songs/byArtists {artistsIds: [1, 2]}
 POST /api/playlists/bySongAndName {songId: [1], name: "Favorite"}
+
+remember to set your app context in application.properties
