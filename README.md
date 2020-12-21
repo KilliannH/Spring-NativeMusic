@@ -84,3 +84,7 @@ because relations are lazy loaded (except users <-> roles, relation is Eagger).
 -- limit queries (by ids): example /songs/limit?start=0&end=10
 
 remember to set your app context in application.properties
+
+POST /api/songs/byAlbum {albumId: 1}
+POST /api/songs/byArtists {artistsIds: [1, 2]}
+POST /api/playlists/bySongAndName {songId: [1], name: "Favorite"}
